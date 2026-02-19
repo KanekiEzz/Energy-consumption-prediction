@@ -224,3 +224,58 @@ commande to install env
 python3 -m venv venv
 
 pip install pandas numpy matplotlib seaborn scikit-learn joblib
+
+
+
+
+
+
+
+++++++++++++++++++++++++Explanation of the Notebook++++++++++++++++++++++++++++++++
+This notebook performs Energy Consumption Prediction using Linear Regression. Here's what each section does:
+
+1. Load Data
+
+df = pd.read_csv("../data/raw/Energy_consumption.csv")
+Loads the energy consumption dataset from CSV.
+
+2. Exploratory Data Analysis (EDA)
+df.head() - Shows first few rows
+df.info() - Shows data types and missing values
+df.describe() - Shows statistical summary
+sns.histplot() - Shows distribution of Energy Consumption
+3. Feature Engineering
+
+df["Timestamp"] = pd.to_datetime(df["Timestamp"])
+df["hour"] = df["Timestamp"].dt.hour
+df["day"] = df["Timestamp"].dt.day
+df["month"] = df["Timestamp"].dt.month
+df["year"] = df["Timestamp"].dt.year
+df = df.drop("Timestamp", axis=1)
+df = pd.get_dummies(df, drop_first=True)
+Extracts time features (hour, day, month, year) from Timestamp
+Converts categorical variables (HVACUsage, LightingUsage, DayOfWeek, Holiday) to numeric using one-hot encoding
+4. Split Data
+
+X = df.drop("EnergyConsumption", axis=1)
+y = df["EnergyConsumption"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+Separates features (X) and target (y)
+Splits into 80% training and 20% testing data
+5. Train Model
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+Trains a Linear Regression model on training data
+6. Evaluation
+
+predictions = model.predict(X_test)
+print("MSE:", mean_squared_error(y_test, predictions))
+print("R2 Score:", r2_score(y_test, predictions))
+Makes predictions on test data
+Calculates Mean Squared Error (MSE) and R² Score
+7. Visualization
+Correlation heatmap showing relationships between features
+Scatter plot of Actual vs Predicted Energy Consumption
+Results:
+The model predicts energy consumption based on features like Temperature, Humidity, SquareFootage, Occupancy, HVAC usage, Lighting usage, etc. The evaluation metrics (MSE and R² Score) show how accurate the predictions are.
