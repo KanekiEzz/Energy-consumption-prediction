@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: energy-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: energy-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development

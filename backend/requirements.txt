@@ -1,0 +1,11 @@
+# Core ML (must match training environment)
+numpy==2.4.2
+pandas==3.0.0
+scikit-learn==1.6.1
+scipy==1.17.0
+joblib==1.5.3
+
+# API
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+pydantic==2.6.4
