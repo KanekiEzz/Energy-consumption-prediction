@@ -100,6 +100,47 @@ npm run dev
 
 Open `http://localhost:3000` to view the UI.
 
+Makefile & Docker
+
+This repo includes a `Makefile` and `docker-compose.yml` to simplify local development and containerized runs.
+
+Makefile (common targets):
+- `make up`: Build and start services with Docker Compose (uses `docker-compose.yml`).
+- `make build`: Build backend and frontend containers.
+- `make backend`: Start only the backend locally (virtualenv).
+- `make frontend`: Start only the frontend (npm).
+- `make down`: Stop and remove containers.
+- `make logs`: Show combined logs.
+- `make clean`: Remove built images and temporary artifacts.
+
+Examples:
+
+```bash
+# start with Docker Compose
+make up
+
+# run backend locally in venv
+make backend
+
+# run frontend locally
+make frontend
+
+# stop containers
+make down
+```
+
+Docker usage (docker-compose):
+
+A `docker-compose.yml` is provided for containerized development. To build and run:
+
+```bash
+docker-compose build
+docker-compose up -d
+docker-compose logs -f
+```
+
+The backend exposes port `8000` (FastAPI) and the frontend exposes port `3000` by default — adjust ports in `docker-compose.yml` as needed.
+
 Data & notebooks
 - Reproduce analysis and model training with the notebooks in `notebooks/` (recommended order: EDA → Preprocessing → Modeling → Analysis results).
 - Store final trained artifacts in `models/` and ensure `backend/app.py` can load `models/model.pkl`.
@@ -109,10 +150,10 @@ Development & improvements
 - Add unit tests for preprocessing and API endpoints.
 - Consider versioning models (MLflow or timestamped filenames) and adding CI pipelines.
 
-Contributing
+<!-- Contributing
 - Open issues or PRs. Describe data splits, hyperparameters, and evaluation metrics when proposing new models.
 
 Contact
-- For implementation questions or dataset details, open an issue in this repo.
+- For implementation questions or dataset details, open an issue in this repo. -->
 
 ---
